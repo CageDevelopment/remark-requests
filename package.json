@@ -1,0 +1,44 @@
+{
+  "name": "remark-requests",
+  "version": "1.0.0",
+  "description": "remark plugin to fetch data dynamically",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "npx eslint . --ext .js",
+    "lint:fix": "npx eslint . --ext .js --fix",
+    "test:coverage": "nyc --reporter lcov tape test/index.js",
+    "test": "npm run lint && npm run test:coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CageDevelopment/remark-requests.git"
+  },
+  "keywords": [
+    "unified",
+    "remark",
+    "remark-plugin",
+    "plugin",
+    "markdown",
+    "http-requests"
+  ],
+  "author": "CageDevelopment",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CageDevelopment/remark-requests/issues"
+  },
+  "homepage": "https://github.com/CageDevelopment/remark-requests#readme",
+  "dependencies": {
+    "node-fetch": "^3.2.10",
+    "unist-util-visit": "^4.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nyc": "^15.1.0",
+    "remark": "^14.0.2",
+    "tape": "^5.6.1",
+    "to-vfile": "^7.2.3"
+  }
+}
