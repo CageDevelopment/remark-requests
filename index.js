@@ -8,7 +8,7 @@ import { visit } from "unist-util-visit";
  * @returns {(node: Root, file: VFile) => Promise<void>}
  */
 export default function remarkRequests(options) {
-  const pattern = /GET\(.{3,},.{1,}\)/g;
+  const pattern = /GET\([^,]{3,},[^)]{1,}\)/g;
 
   return async (tree) => {
     const availableApis = {};
