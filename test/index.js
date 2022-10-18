@@ -22,20 +22,21 @@ tests.add("remark-requests", (t) => {
 
   remark()
     .use(remarkHttpRequests)
-    .process(read("test/example.md"), (err, file) => {
-      const expected =
-        "# Http requests\n\n## API not available stats\n\nFuture price: API not available\nDisclaimer: API not available\n";
-      t.equal(String(file), expected);
+    .process(read("test/complex_test.md"), (err, file) => {
+      t.equal(String(file), read("test/snapshots/complex_test_no_init.md").value);
     });
 
   remark()
     .use(remarkHttpRequests, {
-      apis: [{ name: "coindeskApi", url: "https://api.coindesk.com/v1/bpi/currentprice.json" }],
+      apis: [
+        {
+          name: "coingeckoApi",
+          url: "https://api.coingecko.com/api/v3/coins/ethereum/contract/0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        },
+      ],
     })
-    .process(read("test/example.md"), (err, file) => {
-      const expected =
-        "# Http requests\n\n## Bitcoin stats\n\nFuture price: API field not available\nDisclaimer: This data was produced from the CoinDesk Bitcoin Price Index (USD). Non-USD currency data converted using hourly conversion rate from openexchangerates.org\n";
-      t.equal(String(file), expected);
+    .process(read("test/complex_test.md"), (err, file) => {
+      t.equal(String(file), read("test/snapshots/complex_test_result.md").value);
     });
 });
 
