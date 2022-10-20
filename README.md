@@ -1,3 +1,5 @@
+[![Lint and Test](https://github.com/CageDevelopment/remark-requests/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/CageDevelopment/remark-requests/actions/workflows/main.yaml)
+
 # remark-requests
 
 [**remark**](https://github.com/remarkjs/remark) plugin to fetch dynamic data from APIs.
