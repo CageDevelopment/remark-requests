@@ -8,7 +8,7 @@ import { visit } from "unist-util-visit";
  * @returns {(node: Root, file: VFile) => Promise<void>}
  */
 export default function remarkRequests(options) {
-  const pattern = /GET\([^,]{3,},[^)]{1,}\)/g;
+  const pattern = /GET\([^,]{3,},[^),]{1,}(,\s?\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))?\)/g;
 
   return async (tree) => {
     const availableApis = {};
@@ -27,16 +27,26 @@ export default function remarkRequests(options) {
       if (matches) {
         for (const match of matches) {
           const params = match.slice(4, match.length - 1);
-          const [api, field] = params.split(",").map((param) => param.trim());
+          const [api, field, expiry] = params.split(",").map((param) => param.trim());
 
-          if (availableApis[api]) {
-            if (availableApis[api][field]) {
-              node.value = node.value.replace(match, availableApis[api][field]);
+          let isExpired = false;
+          if (expiry) {
+            const expiryDate = new Date(expiry);
+            isExpired = expiryDate < new Date();
+          }
+
+          if (!isExpired) {
+            if (availableApis[api]) {
+              if (availableApis[api][field]) {
+                node.value = node.value.replace(match, availableApis[api][field]);
+              } else {
+                node.value = node.value.replace(match, "API field not available");
+              }
             } else {
-              node.value = node.value.replace(match, "API field not available");
+              node.value = node.value.replace(match, "API not available");
             }
           } else {
-            node.value = node.value.replace(match, "API not available");
+            node.value = node.value.replace(match, "API no longer available");
           }
         }
       }
