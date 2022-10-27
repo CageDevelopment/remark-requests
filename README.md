@@ -7,7 +7,7 @@
 ## Installation
 
 ```
-npm install @cage-dev/remark-requests
+npm install remark-requests
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install @cage-dev/remark-requests
 
 ```js
 const remark = require("remark");
-const remarkRequests = require("@cage-dev/remark-requests");
+const remarkRequests = require("remark-requests");
 
 remark()
   .use(remarkRequests, {
@@ -27,16 +27,20 @@ remark()
       },
     ],
   })
-  .process("Chart name: GET(coindeskApi, chartName)", (err, file) => {
-    if (err) throw err;
-    console.log(String(file));
-  });
+  .process(
+    "Chart name: GET(coindeskApi, chartName)\nPrice: GET(coindeskApi, chartName, 2022-10-27T00:00Z)",
+    (err, file) => {
+      if (err) throw err;
+      console.log(String(file));
+    }
+  );
 ```
 
 ### Yields
 
 ```
 Chart name: Bitcoin
+Price: API is no longer available
 ```
 
 ## API
